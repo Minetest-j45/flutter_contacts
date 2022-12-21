@@ -8,7 +8,6 @@ class Contacts {
     if (string.isEmpty) {
       string = '{"contacts":[]}';
     }
-    //final json = jsonDecode('{"contacts": [ {"name": "Bob", "key": "123"}, {"name": "John", "key": "abc"}]}');
     final json = jsonDecode(string);
 
     List<Contact> contacts = [];
@@ -27,7 +26,6 @@ class Contacts {
       }).toList(),
     });
 
-    print(json);
     writeJson(json);
   }
 
@@ -35,7 +33,7 @@ class Contacts {
     await Storage().writeText(json);
   }
 
-  void addConctact(Contact contact) async {
+  void addContact(Contact contact) async {
     var contacts = await read();
     contacts.add(contact);
     write(contacts);

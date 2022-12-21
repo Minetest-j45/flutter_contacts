@@ -41,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
           const Text('Contacts:'),
-            FutureBuilder(
+          FutureBuilder(
                 future: _contactList(),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
@@ -56,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
             FloatingActionButton(
               child: const Icon(Icons.add),
               onPressed: () {
-                Contacts().addConctact(Contact(name: 'Bob', key: '123'));
+                Contacts().addContact(Contact(name: 'Bob', key: '123'));
                 setState(() {});
               }
             ),
@@ -67,23 +67,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<Widget> _contactList() async {
-    /*const testJson = """
-  {
-    "contacts": [
-      {
-        "name": "John Doe",
-        "key": "1234567890"
-      },
-      {
-        "name": "Jane Doe",
-        "key": "0987654321"
-      }
-    ]
-  }
-  """;
-
-  Contacts().write(testJson);*/
-
     List<Contact> conts = await Contacts().read();
     return ListView.builder(
       itemCount: conts.length,
@@ -92,7 +75,19 @@ class _MyHomePageState extends State<MyHomePage> {
       itemBuilder: (context, index) {
         return ListTile(
           title: Text(conts[index].name),
+          //do subtitle hash of key in future
           subtitle: Text(conts[index].key),
+          trailing: Icon(Icons.more_vert),
+          onLongPress: () {
+            //some sort of confirmation dialog
+            setState(() {
+              conts.removeAt(index);
+              Contacts().write(conts);
+              setState(() {
+              });
+            });
+          }
+          //onTap: encrypt to
         );
       },
     );
