@@ -37,7 +37,8 @@ class _MyHomePageState extends State<MyHomePage> {
        title: Text(widget.title),
       ),
       body: Center(
-       child: Column(
+       child: SingleChildScrollView(
+          child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
           const Text('Contacts:'),
@@ -61,7 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
               }
             ),
           ],
-        ),
+        ),),
       ),
     );
   }
